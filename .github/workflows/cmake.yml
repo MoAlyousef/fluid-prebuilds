@@ -17,9 +17,11 @@ jobs:
     - name: download fltk
       run: git clone https://github.com/fltk/fltk --depth=1 && cd fltk
     - name: Configure
-      run: cd fltk && cmake -Bbin -DCMAKE_BUILD_TYPE=Release -GNinja
+      run: cd fltk && cmake -Bbin -DCMAKE_BUILD_TYPE=Release -GNinja -DFLTK_BUILD_TEST=OFF -DOPTION_USE_PANGO=ON -DOPTION_USE_CAIRO=ON -DFLTK_BUILD_EXAMPLES=OFF -DOPTION_BUILD_HTML_DOCUMENTATION=OFF -DOPTION_BUILD_PDF_DOCUMENTATION=OFF
     - name: Build
       run: cd fltk && cmake --build bin --config Release
+    - name: Strip
+      run: strip fltk/bin/bin/fluid
     - name: Upload a Build Artifact
       uses: actions/upload-artifact@v2
       with:
@@ -33,9 +35,11 @@ jobs:
     - name: download fltk
       run: git clone https://github.com/fltk/fltk --depth=1
     - name: Configure
-      run: cd fltk && cmake -Bbin -DCMAKE_BUILD_TYPE=Release -GNinja
+      run: cd fltk && cmake -Bbin -DCMAKE_BUILD_TYPE=Release -GNinja -DFLTK_BUILD_TEST=OFF -DFLTK_BUILD_EXAMPLES=OFF -DOPTION_BUILD_HTML_DOCUMENTATION=OFF -DOPTION_BUILD_PDF_DOCUMENTATION=OFF
     - name: Build
       run: cd fltk && cmake --build bin --config Release
+    - name: Strip
+      run: strip fltk/bin/bin/fluid
     - name: Upload a Build Artifact
       uses: actions/upload-artifact@v2
       with:
@@ -48,15 +52,14 @@ jobs:
         shell: bash
     steps:
     - uses: actions/checkout@v3
-    - uses: seanmiddleditch/gha-setup-ninja@master
     - name: download fltk
       run: git clone https://github.com/fltk/fltk --depth=1 && cd fltk
     - name: Configure
-      run: cd fltk && cmake -Bbin -DCMAKE_BUILD_TYPE=Release -GNinja
+      run: cd fltk && cmake -Bbin -DCMAKE_BUILD_TYPE=Release -DFLTK_BUILD_TEST=OFF -DFLTK_BUILD_EXAMPLES=OFF -DOPTION_BUILD_HTML_DOCUMENTATION=OFF -DOPTION_BUILD_PDF_DOCUMENTATION=OFF
     - name: Build
       run: cd fltk && cmake --build bin --config Release
     - name: Upload a Build Artifact
       uses: actions/upload-artifact@v2
       with:
         name: fluid-windows-x64
-        path: fltk/bin/bin/fluid.exe
+        path: fltk/bin/
