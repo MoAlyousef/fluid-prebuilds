@@ -44,7 +44,7 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: fluid-macos-x64
-        path: fltk/bin/bin/
+        path: fltk/bin/bin/fluid.app
   windows-x64:
     runs-on: windows-latest
     steps:
