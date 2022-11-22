@@ -59,4 +59,4 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: fluid-windows-x64
-        path: fltk\bin\
+        path: fltk\bin\bin\Release\fluid.exe
