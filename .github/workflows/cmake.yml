@@ -1,0 +1,62 @@
+name: Fluid
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  linux-x64:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - uses: seanmiddleditch/gha-setup-ninja@master
+    - name: download deps
+      run: sudo apt-get update && sudo apt-get install -y libpango1.0-dev libx11-dev libxext-dev libxft-dev libxinerama-dev libxcursor-dev libxrender-dev libxfixes-dev libpng-dev libgl1-mesa-dev libglu1-mesa-dev
+    - name: download fltk
+      run: git clone https://github.com/fltk/fltk --depth=1 && cd fltk
+    - name: Configure
+      run: cmake -Bbin -DCMAKE_BUILD_TYPE=Release -GNinja
+    - name: Build
+      run: cmake --build bin --config Release
+    - name: Upload a Build Artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: fluid-linux-x64
+        path: bin/bin/fluid
+  macos-x64:
+    runs-on: macos-latest
+    steps:
+    - uses: actions/checkout@v3
+    - uses: seanmiddleditch/gha-setup-ninja@master
+    - name: download fltk
+      run: git clone https://github.com/fltk/fltk --depth=1 && cd fltk
+    - name: Configure
+      run: cmake -Bbin -DCMAKE_BUILD_TYPE=Release -GNinja
+    - name: Build
+      run: cmake --build bin --config Release
+    - name: Upload a Build Artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: fluid-macos-x64
+        path: bin/bin/fluid
+  windows-x64:
+    runs-on: windows-latest
+    defaults:
+      run:
+        shell: bash
+    steps:
+    - uses: actions/checkout@v3
+    - uses: seanmiddleditch/gha-setup-ninja@master
+    - name: download fltk
+      run: git clone https://github.com/fltk/fltk --depth=1 && cd fltk
+    - name: Configure
+      run: cmake -Bbin -DCMAKE_BUILD_TYPE=Release -GNinja
+    - name: Build
+      run: cmake --build bin --config Release
+    - name: Upload a Build Artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: fluid-windows-x64
+        path: bin/bin/fluid.exe
