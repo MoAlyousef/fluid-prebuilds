@@ -15,7 +15,7 @@ jobs:
     - name: download deps
       run: sudo apt-get update && sudo apt-get install -y libpango1.0-dev libx11-dev libxext-dev libxft-dev libxinerama-dev libxcursor-dev libxrender-dev libxfixes-dev libpng-dev libgl1-mesa-dev libglu1-mesa-dev
     - name: download fltk
-      run: git clone https://github.com/fltk/fltk --depth=1 && cd fltk
+      run: git clone https://github.com/fltk/fltk --depth=1
     - name: Configure
       run: cd fltk && cmake -Bbin -DCMAKE_BUILD_TYPE=Release -GNinja -DFLTK_BUILD_TEST=OFF -DOPTION_USE_PANGO=ON -DOPTION_USE_CAIRO=ON -DFLTK_BUILD_EXAMPLES=OFF -DOPTION_BUILD_HTML_DOCUMENTATION=OFF -DOPTION_BUILD_PDF_DOCUMENTATION=OFF
     - name: Build
@@ -47,13 +47,10 @@ jobs:
         path: fltk/bin/bin/fluid
   windows-x64:
     runs-on: windows-latest
-    defaults:
-      run:
-        shell: bash
     steps:
     - uses: actions/checkout@v3
     - name: download fltk
-      run: git clone https://github.com/fltk/fltk --depth=1 && cd fltk
+      run: git clone https://github.com/fltk/fltk --depth=1
     - name: Configure
       run: cd fltk && cmake -Bbin -DCMAKE_BUILD_TYPE=Release -DFLTK_BUILD_TEST=OFF -DFLTK_BUILD_EXAMPLES=OFF -DOPTION_BUILD_HTML_DOCUMENTATION=OFF -DOPTION_BUILD_PDF_DOCUMENTATION=OFF
     - name: Build
@@ -62,4 +59,4 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: fluid-windows-x64
-        path: fltk/bin/
+        path: fltk\bin\
